@@ -5,7 +5,7 @@ import Hero from "./components/HeroSection";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Works from "./components/Works";
-import Connect from "./components/connect";
+import Connect from "./components/Connects";
 function App() {
   return (
     <>

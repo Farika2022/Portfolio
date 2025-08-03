@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Reveal } from "../Reveal.tsx";
 import {
@@ -12,6 +12,10 @@ import {
 import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from "react-image-gallery";
 import Modal from "react-modal";
+
+{
+  /*Included images */
+}
 import BookHome from "../assets/Book_home.png";
 import BookInfo from "../assets/Book_info.png";
 import BookS from "../assets/Book_service.png";
@@ -43,13 +47,19 @@ import KNN from "../assets/KNN Implementation.jpeg";
 import Forest from "../assets/Random Forest Implementation.jpeg";
 import grid from "../assets/Grid cell implementation.jpg";
 import occurance from "../assets/Dropdown list of prediction models.jpeg";
-import intro from "../assets/img_popup0.png";
 import Sexp from "../assets/img_popup2.png";
 import learnmore from "../assets/img_popup3.png";
 import intro1 from "../assets/img_PBunmodified.png";
 import notify from "../assets/img_notifier.png";
 import IP from "../assets/img_internalpage1.png";
 import IP2 from "../assets/img_internalpage_notrackers.png";
+import event from "../assets/event.png";
+import event1 from "../assets/event1.png";
+import weather from "../assets/weather_app.mp4";
+import weather1 from "../assets/weather.png";
+import Ecommerce from "../assets/E-commerce1.mp4";
+import Ecommerce1 from "../assets/Ecommerce.png";
+
 const Works: React.FC = () => {
   return (
     <section
@@ -145,13 +155,7 @@ const Works: React.FC = () => {
           <Reveal direction="right" delay={0.4}>
             <PhilosophyCard
               title="Help the Botanist"
-              description="In this project, I was responsible for developing the front-end of a plant distribution prediction tool. The web application allows users to select a plant species and an occurrence mode, which triggers the display of a heatmap over Denmark.
-
-If current occurrence data is available, the app shows a real-time heatmap based on actual observations.
-
-If not, it communicates with a Machine Learning model to predict the plant's potential distribution, and displays a generated heatmap accordingly.
-
-I integrated the frontend with the backend (ML model) using FastAPI, enabling smooth, asynchronous communication between the client interface and the model server."
+              description="In this project, I was responsible for developing the front-end of a plant distribution prediction tool. The web application allows users to select a plant species and an occurrence mode, which triggers the display of a heatmap over Denmark.If current occurrence data is available, the app shows a real-time heatmap based on actual observations. If not, it communicates with a Machine Learning model to predict the plant's potential distribution, and displays a generated heatmap accordingly. I integrated the frontend with the backend (ML model) using FastAPI, enabling smooth, asynchronous communication between the client interface and the model server."
               delay={0.1}
               images={[
                 {
@@ -291,6 +295,24 @@ I integrated the frontend with the backend (ML model) using FastAPI, enabling sm
               }
             />
           </Reveal>
+          <Reveal direction="left" delay={0.4}>
+            <PhilosophyCard
+              title=" Upcoming Events "
+              description="I created a simple website about UpcomingEvents. To strengthen my HTML and CSS skill."
+              delay={0}
+              images={[
+                {
+                  original: event,
+                  thumbnail: event,
+                },
+
+                {
+                  original: event1,
+                  thumbnail: event,
+                },
+              ]}
+            />
+          </Reveal>
           <Reveal direction="right" delay={0.4}>
             <PhilosophyCard
               title=" Basic Diet Information "
@@ -333,6 +355,34 @@ I integrated the frontend with the backend (ML model) using FastAPI, enabling sm
               ]}
             />
           </Reveal>
+          <Reveal direction="right" delay={0.4}>
+            <PhilosophyCard
+              title=" Weather App "
+              description="I created a simple Weather App. It display the real-time temperature, wind and humidity of the selected city."
+              delay={0}
+              images={[
+                {
+                  type: "video",
+                  original: weather, 
+                  thumbnail: weather1, 
+                },
+              ]}
+            />
+          </Reveal>
+          <Reveal direction="left" delay={0.4}>
+            <PhilosophyCard
+              title=" E-commerce website "
+              description="I created a simple e-commerce website for dress. And I also included simple cart and payment pages to it."
+              delay={0}
+              images={[
+               {
+                  type: "video",
+                  original: Ecommerce, 
+                  thumbnail: Ecommerce1, 
+                },
+              ]}
+            />
+          </Reveal>
         </div>
 
         <div className="relative w-1/2 h-[200px]"></div>
@@ -362,28 +412,39 @@ const PhilosophyCard: React.FC<{
   title: string;
   description: React.ReactNode;
   delay: number;
-  images?: { original: string; thumbnail: string }[];
+  images?: { type?: "image" | "video"; original: string; thumbnail: string }[];
 }> = ({ title, description, delay, images = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showFull, setShowFull] = useState(false);
+  const [showToggle, setShowToggle] = useState(false);
+  const descRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = descRef.current;
+    if (el) {
+      // If content overflows when not expanded
+      const shouldShow = el.scrollHeight > el.clientHeight;
+      setShowToggle(shouldShow);
+    }
+  }, [description]);
   return (
     <motion.div
-      className="text-center p-6 bg-gradient-to-br from-violet-accent to-pink-accent rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-      initial={{ opacity: 0, y: 20 }}
+      className="flex flex-col justify-between h-90 text-center p-12 bg-gradient-to-br from-violet-accent to-pink-accent rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
     >
       {/* Stacked image preview */}
-      {images.length > 0 && (
+      <div className="flex items-center gap-3 mb-4">
         <div
-          className="relative w-10 h 10 cursor-pointer mb-4"
+          className="relative w-12 h-12 cursor-pointer"
           onClick={() => setIsOpen(true)}
         >
           <img
             src={images[0].thumbnail}
             alt="Preview"
-            className="rounded-md shadow-md"
+            className="rounded-md shadow-md w-full h-full object-cover"
           />
           {images.length > 1 && (
             <div className="absolute top-0 right-0 bg-black bg-opacity-50 text-white px-2 text-xs rounded-bl">
@@ -391,39 +452,71 @@ const PhilosophyCard: React.FC<{
             </div>
           )}
         </div>
-      )}
-      <h3 className="text-2xl font-serif mb-4 text-neutral-900">{title}</h3>
-      <p
-        className={` text-white text-xl ${
-          showFull ? "" : "line-clamp-4"
-        } transition-all`}
+        <h3 className="text-2xl font-serif text-neutral-900 mb-4">{title}</h3>
+      </div>
+
+      <div
+        ref={descRef}
+        className={`text-white text-xl transition-all ${
+          showFull ? "max-h-full" : "line-clamp-4"
+        } overflow-hidden`}
       >
         {description}
-      </p>
-      <button
-        className="mt-2 text-blue-500 text-sm self-start"
-        onClick={() => setShowFull(!showFull)}
-      >
-        {showFull ? "Show Less" : "Read More"}
-      </button>
+      </div>
+
+      {/* Only show if text is overflowing */}
+      {showToggle && (
+        <button
+          className="text-center mt-2 text-yellow-300 text-sm self-start"
+          onClick={() => setShowFull(!showFull)}
+        >
+          {showFull ? "Show Less" : "Read More"}
+        </button>
+      )}
+
       {/* Modal Gallery */}
       {images.length > 0 && (
         <Modal
           isOpen={isOpen}
           onRequestClose={() => setIsOpen(false)}
-          className="max-w-4xl bottom-20 mx-auto mt-16 bg-white rounded-lg p-4 outline-none"
+          className="max-w-4xl bottom-20 mx-auto mt-16 bg-white rounded-lg p-10 outline-none"
           overlayClassName="fixed   inset-0 bg-black bg-opacity-60 flex justify-center items-start z-50"
         >
           <ImageGallery
             items={images}
-            showPlayButton={true}
-            showThumbnails={true}
-            additionalClass="custom-gallery"
+  showPlayButton={true}
+  showThumbnails={true}
+  additionalClass="custom-gallery"
+  renderItem={renderMediaItem}
           />
         </Modal>
       )}
     </motion.div>
   );
 };
+const renderMediaItem = (item: any) => {
+  if (item.type === 'video') {
+    return (
+      <div className="video-wrapper" style={{ position: 'relative', paddingBottom: '56.25%', height: 10 }}>
+        <video
+          controls
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          poster={item.thumbnail}
+        >
+          <source src={item.original} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    );
+  }
 
+  // Default image
+  return (
+    <img
+      src={item.original}
+      alt=""
+      style={{ width: '100%', borderRadius: '12px' }}
+    />
+  );
+};
 export default Works;
