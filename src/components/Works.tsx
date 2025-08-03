@@ -184,6 +184,34 @@ const Works: React.FC = () => {
           </Reveal>
           <Reveal direction="right" delay={0.4}>
             <PhilosophyCard
+              title=" Weather App "
+              description="I created a simple Weather App. It display the real-time temperature, wind and humidity of the selected city."
+              delay={0}
+              images={[
+                {
+                  type: "video",
+                  original: weather,
+                  thumbnail: weather1,
+                },
+              ]}
+            />
+          </Reveal>
+          <Reveal direction="left" delay={0.4}>
+            <PhilosophyCard
+              title=" E-commerce website "
+              description="I created a simple e-commerce website for dress. And I also included simple cart and payment pages to it."
+              delay={0}
+              images={[
+                {
+                  type: "video",
+                  original: Ecommerce,
+                  thumbnail: Ecommerce1,
+                },
+              ]}
+            />
+          </Reveal>
+          <Reveal direction="right" delay={0.4}>
+            <PhilosophyCard
               title="Booking Website"
               delay={0.2}
               images={[
@@ -355,34 +383,6 @@ const Works: React.FC = () => {
               ]}
             />
           </Reveal>
-          <Reveal direction="right" delay={0.4}>
-            <PhilosophyCard
-              title=" Weather App "
-              description="I created a simple Weather App. It display the real-time temperature, wind and humidity of the selected city."
-              delay={0}
-              images={[
-                {
-                  type: "video",
-                  original: weather, 
-                  thumbnail: weather1, 
-                },
-              ]}
-            />
-          </Reveal>
-          <Reveal direction="left" delay={0.4}>
-            <PhilosophyCard
-              title=" E-commerce website "
-              description="I created a simple e-commerce website for dress. And I also included simple cart and payment pages to it."
-              delay={0}
-              images={[
-               {
-                  type: "video",
-                  original: Ecommerce, 
-                  thumbnail: Ecommerce1, 
-                },
-              ]}
-            />
-          </Reveal>
         </div>
 
         <div className="relative w-1/2 h-[200px]"></div>
@@ -484,10 +484,10 @@ const PhilosophyCard: React.FC<{
         >
           <ImageGallery
             items={images}
-  showPlayButton={true}
-  showThumbnails={true}
-  additionalClass="custom-gallery"
-  renderItem={renderMediaItem}
+            showPlayButton={true}
+            showThumbnails={true}
+            additionalClass="custom-gallery"
+            renderItem={renderMediaItem}
           />
         </Modal>
       )}
@@ -495,12 +495,21 @@ const PhilosophyCard: React.FC<{
   );
 };
 const renderMediaItem = (item: any) => {
-  if (item.type === 'video') {
+  if (item.type === "video") {
     return (
-      <div className="video-wrapper" style={{ position: 'relative', paddingBottom: '56.25%', height: 10 }}>
+      <div
+        className="video-wrapper"
+        style={{ position: "relative", paddingBottom: "56.25%", height: 10 }}
+      >
         <video
           controls
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+          }}
           poster={item.thumbnail}
         >
           <source src={item.original} type="video/mp4" />
@@ -515,7 +524,7 @@ const renderMediaItem = (item: any) => {
     <img
       src={item.original}
       alt=""
-      style={{ width: '100%', borderRadius: '12px' }}
+      style={{ width: "100%", borderRadius: "12px" }}
     />
   );
 };
